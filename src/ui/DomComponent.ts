@@ -1,5 +1,5 @@
 import { Component, Ticker, Mapper, Muxer, Guard, Demuxer, Counter } from '../index';
-import { isNil, map, empty, is } from 'ramda';
+import { isNil, map, empty, is } from 'nanoutils';
 
 
 import { h, init } from 'snabbdom';
