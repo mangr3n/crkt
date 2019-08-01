@@ -1,0 +1,38 @@
+{
+  "name": "crkt",
+  "version": "0.1.0",
+  "description": "Framework for creating Components with dataflow semantics",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mangr3n/crkt.git"
+  },
+  "keywords": [
+    "fbp",
+    "graflow"
+  ],
+  "author": "David Boyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mangr3n/crkt/issues"
+  },
+  "homepage": "https://github.com/mangr3n/crkt#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "js-csp": "^1.0.1",
+    "nanoutils": "^0.1.2",
+    "setasap": "^2.0.1",
+    "snabbdom": "^0.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-typescript": "^7.1.0",
+    "jest": "^24.8.0",
+    "typescript": "^3.3.1"
+  }
+}
