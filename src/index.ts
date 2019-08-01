@@ -1,4 +1,5 @@
-import { Component } from './Component';
+declare var require;
+require('@babel/polyfill');
 
 export { Component } from './Component';
 

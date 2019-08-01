@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "test": "jest",
-    "compile": "tsc"
+    "compile": "tsc",
+    "clean": "rm -rf build"
   },
   "repository": {
     "type": "git",
