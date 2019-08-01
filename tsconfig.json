@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "noEmitHelpers": false,
+    "lib": ["es2015","dom","es5"],
+    "target": "ES5",
+    "outDir": "./build"
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2
+  },
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "files": [
+    "src/index.ts",
+    "src/args.ts",
+    "src/Component.ts",
+    "src/FunctionComponent.ts",
+    "src/GraphComponent.ts",
+    "src/ID.ts",
+    "src/interfaces.ts",
+    "src/util/debug.ts",
+    "src/util/funcs.ts",
+    "src/components/Accumulator.ts",
+    "src/components/Chain.ts",
+    "src/components/Checker.ts",
+    "src/components/Counter.ts",
+    "src/components/Delayer.ts",
+    "src/components/Demuxer.ts",
+    "src/components/Filter.ts",
+    "src/components/Guard.ts",
+    "src/components/Hub.ts",
+    "src/components/Identity.ts",
+    "src/components/Iterator.ts",
+    "src/components/Mapper.ts",
+    "src/components/Memorizer.ts",
+    "src/components/Muxer.ts",
+    "src/components/Null.ts",
+    "src/components/Repeater.ts",
+    "src/components/Serializer.ts",
+    "src/components/Ticker.ts",
+    "src/components/UniqueFilter.ts"
+  ]
+}
