@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = require("./Component");
 exports.Component = Component_1.Component;
+var ArraySerializer_1 = require("./components/ArraySerializer");
+exports.ArraySerializer = ArraySerializer_1.ArraySerializer;
 var Accumulator_1 = require("./components/Accumulator");
 exports.Accumulator = Accumulator_1.Accumulator;
 var Chain_1 = require("./components/Chain");
