@@ -1,11 +1,8 @@
 {
   "name": "crkt",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Framework for creating Components with dataflow semantics",
   "main": "build/index.js",
-  "bin": {
-    "tsc": "./node_modules/typescript/bin/tsc"
-  },
   "scripts": {
     "test": "jest",
     "compile": "tsc"
