@@ -2,6 +2,7 @@ import { Component } from './Component';
 
 export { Component } from './Component';
 
+export { ArraySerializer } from './components/ArraySerializer';
 export { Accumulator } from './components/Accumulator';
 export { Chain } from './components/Chain';
 export { Demuxer } from './components/Demuxer';

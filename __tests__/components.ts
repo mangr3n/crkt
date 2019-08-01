@@ -9,12 +9,12 @@ import {
   Delayer,
   Guard,
   Serializer,
-  UniqueFilter, Iterator, Hub, Memorizer, Muxer, Filter
+  UniqueFilter, Iterator, Hub, Memorizer, Muxer, Filter, ArraySerializer
 } from "../src";
 import {isObject} from "../src/util/funcs";
 
 const INITIAL_DELAY = 50;
-const DEFAULT_DELAY=20;
+const DEFAULT_DELAY=50;
 
 declare var test;
 declare var expect;
@@ -286,5 +286,12 @@ test("A Filter should emit values that produce true when passed through the supp
   factory:() => Filter(isEven),
   inputs: [1,2,3,4],
   outputs: [2,4]
+}));
+
+// ArraySerializer Tests
+test("An ArraySerializer should emit a value if it isn't an Array, and the values of an Array if it is an Array",testComponent({
+  factory: ArraySerializer,
+  inputs: [1,[1,2]],
+  outputs: [1,1,2]
 }));
 
