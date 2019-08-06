@@ -41,7 +41,7 @@ export const FunctionComponent = (arg) => {
   // Value from the _inChannel
   const next = (v = {}) => {
     _currentOutput = v;
-    csp.putAsync(_outSource,v);
+    csp.putAsync(_outSource,isNil(v)?NULL_OBJECT:v);
   };
 
   csp.go(function* () {
