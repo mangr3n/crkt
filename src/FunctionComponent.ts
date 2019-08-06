@@ -7,6 +7,9 @@ const csp = require('js-csp');
 
 declare var require;
 
+
+const NULL_OBJECT = new Object();
+
 const capitalize = (x: string) => {
   if (x.length === 0) return x;
   if (x.length === 1) return x.toUpperCase();
@@ -53,6 +56,7 @@ export const FunctionComponent = (arg) => {
 
   const send = v => {
     if (_debug) debugMessage(DEBUG_LABEL, 'send',v);
+    if (isNil(v)) v = NULL_OBJECT;
     csp.putAsync(_inChannel,v);
   };
 
@@ -74,7 +78,11 @@ export const FunctionComponent = (arg) => {
           csp.operations.mult.untap(_onChan);
           return null;
         } else {
-          handler(received.value);
+          if (received.value == NULL_OBJECT) {
+            handler(null);
+          } else {
+            handler(received.value);
+          }
         }
       }
     });

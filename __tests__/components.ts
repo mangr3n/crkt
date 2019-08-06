@@ -204,16 +204,14 @@ test('TestGuard should emit values to ports for named conditions, or else...',te
     greaterThan20: greaterThan20Output,
     else: elseOutput,
     another: anotherOutput
-  },
-  delay:30
+  }
 }));
 
 // Serializaer Tests
 test('Serializer should serialize an iterable', testSimpleComponent(
   Serializer,
   [[1,2,3],'abc',['abc','def']],
-  [1,2,3,'a','b','c','abc','def'],
-  20
+  [1,2,3,'a','b','c','abc','def']
 ));
 
 // UniqueFilter Tests
@@ -294,4 +292,6 @@ test("An ArraySerializer should emit a value if it isn't an Array, and the value
   inputs: [1,[1,2]],
   outputs: [1,1,2]
 }));
+
+test("Null should pass through unphased.",testSimpleComponent(() => Identity("NullTest"),[null,null],[null,null]));
 
