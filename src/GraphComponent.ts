@@ -126,7 +126,7 @@ export const GraphComponent: (any) => Component = (arg) => {
     description,
     debug: _debug
   };
-  if (debug) {
+  if (debug && debug.length !== 0) {
     debugMessage(DEBUG_LABEL, 'created', result);
   }
   return result;
