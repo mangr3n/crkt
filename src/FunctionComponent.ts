@@ -1,106 +1,73 @@
-import {nextID} from "./ID";
-import {debugMessage} from "./util/debug";
+import { map, values, isEmpty, isNil } from 'nanoutils';
+import { syncInvoker, asyncInvoker } from './util/invoker';
 import {isSignal} from "./interfaces";
-import {isNil} from "./util/funcs";
+import {debugMessage} from "./util/debug";
+import {nextID} from './ID';
 
-const csp = require('js-csp');
-
-declare var require;
-
-
-const NULL_OBJECT = new Object();
+export const getInvoker = (type) => {
+  if (isSignal(type)) return syncInvoker;
+  else return asyncInvoker;
+};
 
 const capitalize = (x: string) => {
   if (x.length === 0) return x;
   if (x.length === 1) return x.toUpperCase();
   return x.substring(0, 1).toUpperCase() + x.substring(1);
-};
-
+}
 
 export const FunctionComponent = (arg) => {
-  const {name:portName, onNext, type} = arg;
-
-  let {debug: _debug} = arg;
+  const { name: portName, onNext, type } = arg;
+  let { debug: _debug } = arg;
 
   let _debugId = null;
-  let _handlerDisconnectChannels = {};
+  let _handlers = {};
+  let _valueQueue = [];
+  let _currentValue = null;
+  let componentId = nextID();
+  const DEBUG_LABEL = `${capitalize(type)}(${portName}:${componentId})`;
 
-  const componentId = nextID();
+  const _handlerInvoker = getInvoker(type);
 
-  const _inChannel = csp.chan();
-  const _outSource = csp.chan();
-  const _outMult = csp.operations.mult(_outSource);
+  const next = v => map(
+    handler => _handlerInvoker(v, handler),
+    values(_handlers)
+  );
 
-  let _currentOutput = null;
-
-  const DEBUG_LABEL = `${capitalize(type)}(${portName}:${componentId}`;
-  const _debugHandler = (v) => {
-    debugMessage(DEBUG_LABEL, 'out',v);
-  };
-
-  // Value from the _inChannel
-  const next = (v = {}) => {
-    _currentOutput = v;
-    csp.putAsync(_outSource,isNil(v)?NULL_OBJECT:v);
-  };
-
-  csp.go(function* () {
-    while(true) {
-      let inValue = yield csp.take(_inChannel);
-      if (_debug) {
-        debugMessage(DEBUG_LABEL, 'from _inChannel',inValue);
-      }
-      onNext(inValue,next);
+  const _processHandlers = () => {
+    while (!isEmpty(_valueQueue)) {
+      let _currentValue = _valueQueue.shift();
+      onNext(_currentValue, next);
     }
-  });
+  };
 
-  const send = v => {
-    if (_debug) debugMessage(DEBUG_LABEL, 'send',v);
-    if (isNil(v)) v = NULL_OBJECT;
-    csp.putAsync(_inChannel,v);
+  const send = (v) => {
+    if (_debug) debugMessage(DEBUG_LABEL, 'send', v);
+    _valueQueue.push(v);
+    _processHandlers();
   };
 
   const on = (handler) => {
-    if(_debug) debugMessage(DEBUG_LABEL,'on',{handler});
-    const _id = nextID();
-    const _onChan = csp.chan();
-    const _offChan = csp.chan();
-    _handlerDisconnectChannels[_id] = _offChan;
-
-    csp.operations.mult.tap(_outMult,_onChan);
-
-    csp.go(function* () {
-      while(true) {
-        let received = yield csp.alts([_onChan,_offChan]);
-        if (received.channel == _offChan) {
-          _offChan.close();
-          delete _handlerDisconnectChannels[_id];
-          csp.operations.mult.untap(_onChan);
-          return null;
-        } else {
-          if (received.value == NULL_OBJECT) {
-            handler(null);
-          } else {
-            handler(received.value);
-          }
-        }
-      }
-    });
-
-    if (isSignal(type)) {
-      handler(_currentOutput);
-    }
-    return _id;
+    if (_debug) debugMessage(DEBUG_LABEL, 'on', { handler });
+    const result = nextID();
+    _handlers[result] = handler;
+    if (isSignal(type)) handler(_currentValue);
+    return result;
   };
 
   const off = (id) => {
-    const _offChan = _handlerDisconnectChannels[id];
-    if (!isNil(_offChan)) {
-      csp.putAsync(_offChan,true);
+    if (!isNil(_handlers[id])) {
+      delete _handlers[id];
+      return true;
+    } else {
+      return false;
     }
   };
 
-  const debug = (turnOn:boolean) => {
+  const _debugHandler = (v) => {
+    debugMessage(DEBUG_LABEL, 'out', v);
+  }
+
+  const debug = (turnOn: boolean) => {
     if (turnOn && !isNil(_debugId)) return;
     if (!turnOn && isNil(_debugId)) return;
     if (turnOn) {
@@ -112,22 +79,33 @@ export const FunctionComponent = (arg) => {
     }
   };
 
-  const result = {
+  const description = () => ({
+    name: portName,
+    id: componentId,
     send,
     on,
     off,
     debug,
+    description
+  });
+
+  const result = {
+    send,
+    on,
+    off,
+    description,
+    debug,
     id: componentId,
     name: portName,
-    inputs: {default:null},
-    outputs: {default:null}
+    inputs: { default: null },
+    outputs: { default: null }
   };
+
   result.inputs.default = result;
   result.outputs.default = result;
 
   if (_debug) {
-    debugMessage(DEBUG_LABEL,'created',result);
+    debugMessage(DEBUG_LABEL, 'created', result);
   }
-
   return result;
 };

@@ -13,7 +13,7 @@ import {
 } from "../src";
 import {isObject} from "../src/util/funcs";
 
-const INITIAL_DELAY = 50;
+const INITIAL_DELAY = 100;
 const DEFAULT_DELAY=50;
 
 declare var test;
