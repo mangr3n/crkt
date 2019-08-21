@@ -1,6 +1,6 @@
 {
   "name": "crkt",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Framework for creating Components with dataflow semantics",
   "main": "build/index.js",
   "scripts": {
