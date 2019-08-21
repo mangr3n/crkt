@@ -26,24 +26,24 @@ export const FunctionComponent = (arg) => {
   let componentId = nextID();
   const DEBUG_LABEL = `${capitalize(type)}(${portName}:${componentId})`;
 
-  const _handlerInvoker = getInvoker(type);
-
-  const next = v => map(
-    handler => _handlerInvoker(v, handler),
-    values(_handlers)
-  );
-
-  const _processHandlers = () => {
-    while (!isEmpty(_valueQueue)) {
-      let _currentValue = _valueQueue.shift();
-      onNext(_currentValue, next);
+  function next (v) {
+    const handlers = Object.keys(_handlers).map(key => _handlers[key]);
+    for (let handler of handlers) {
+      if (isSignal(type)) {
+        asyncInvoker(v,handler);
+      } else {
+        handler(v);
+      }
     }
-  };
+  }
 
   const send = (v) => {
     if (_debug) debugMessage(DEBUG_LABEL, 'send', v);
     _valueQueue.push(v);
-    _processHandlers();
+    while(!isEmpty(_valueQueue)) {
+      let _currentValue = _valueQueue.shift();
+      onNext(_currentValue,next);
+    }
   };
 
   const on = (handler) => {
