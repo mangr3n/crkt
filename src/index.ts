@@ -23,4 +23,5 @@ export { Identity } from './components/Identity';
 export { Filter } from './components/Filter';
 export { Repeater } from './components/Repeater';
 export { Ticker } from './components/Ticker';
+export { SortedDemuxer } from './components/SortedDemuxer';
 
