@@ -3,7 +3,7 @@ import { reduce, map, concat, isNil } from 'nanoutils';
 
 const outputReducer = (acc, output) => {
   acc[output] = Component((v, next) => {
-    if (!isNil(v[output])) next(v[output]);
+    if (v.hasOwnProperty(output)) next(v[output]);
   });
   return acc;
 };
