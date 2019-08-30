@@ -14,7 +14,7 @@ import {
 import {isObject} from "../src/util/funcs";
 
 const INITIAL_DELAY = 100;
-const DEFAULT_DELAY=50;
+const DEFAULT_DELAY=20;
 
 declare var test;
 declare var expect;
@@ -225,7 +225,8 @@ test('UniqueFilter should eliminate sequential duplicates from the input',testSi
 test('A cyclic Iterator emits elements of an iterable and then cycles back to the start',testSimpleComponent(
   () => Iterator('test',{cyclic:true}),
   [1,1,1,1,1,1],
-  ['t','e','s','t','t','e']
+  ['t','e','s','t','t','e'],
+  200
 ));
 
 test('A non-cyclic Iterator stops emitting when it reaches the end',testSimpleComponent(
@@ -293,5 +294,5 @@ test("An ArraySerializer should emit a value if it isn't an Array, and the value
   outputs: [1,1,2]
 }));
 
-test("Null should pass through unphased.",testSimpleComponent(() => Identity("NullTest"),[null,null],[null,null]));
+test("Null should pass through unphased.",testSimpleComponent(() => Identity("NullTest", false),[null,null],[null,null]));
 
