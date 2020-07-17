@@ -4,11 +4,6 @@ import {isSignal} from "./interfaces";
 import {debugMessage} from "./util/debug";
 import {nextID} from './ID';
 
-export const getInvoker = (type) => {
-  if (isSignal(type)) return syncInvoker;
-  else return asyncInvoker;
-};
-
 const capitalize = (x: string) => {
   if (x.length === 0) return x;
   if (x.length === 1) return x.toUpperCase();
