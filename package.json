@@ -24,6 +24,7 @@
   "homepage": "https://github.com/mangr3n/crkt#readme",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "graflow": "^0.3.2",
     "js-csp": "^1.0.1",
     "nanoutils": "^0.1.2",
     "setasap": "^2.0.1",
