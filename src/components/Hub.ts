@@ -1,6 +1,5 @@
-import { Component, Mapper } from '..';
-import { map } from 'nanoutils';
-
+import { Component } from '../Component';
+import { map } from '../util/fp';
 
 export const Hub = (...inputs) => {
   let components = {};

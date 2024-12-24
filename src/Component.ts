@@ -1,4 +1,4 @@
-import { isNil } from 'nanoutils';
+import { isNil } from './util/fp';
 import { toArgsObject } from './args';
 import { FunctionComponent } from './FunctionComponent';
 import { GraphComponent } from './GraphComponent';

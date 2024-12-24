@@ -1,5 +1,5 @@
-import { map, values, isEmpty, isNil } from 'nanoutils';
-import { syncInvoker, asyncInvoker } from './util/invoker';
+import { isEmpty, isNil } from './util/fp';
+import { asyncInvoker } from './util/invoker';
 import {isSignal} from "./interfaces";
 import {debugMessage} from "./util/debug";
 import {nextID} from './ID';

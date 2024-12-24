@@ -1,5 +1,5 @@
-import { Component } from '..';
-import { reduce, keys, map, concat, range } from 'nanoutils';
+import { Component } from '../Component';
+import { reduce, keys, map, concat, range } from '../util/fp';
 
 export const Chain = (...args) => {
   const lastIndex = args.length - 1;

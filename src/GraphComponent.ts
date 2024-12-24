@@ -1,5 +1,5 @@
-import { Component } from "./interfaces";
-import { isNil, uniq, append, fromPairs, map, keys } from 'nanoutils';
+import { Component } from './Component';
+import { isNil, uniq, append, fromPairs, map, keys } from './util/fp';
 import { nextID } from './ID';
 import { debugMessage } from './util/debug';
 import { Identity } from './index';

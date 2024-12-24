@@ -1,5 +1,5 @@
 import { Component, Chain, Demuxer } from '..';
-import { keys, toPairs, map, is } from 'nanoutils';
+import { keys, toPairs, map, is } from '../util/fp';
 
 export const Guard = conds => Chain(
   Component((v, next) => {

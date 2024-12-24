@@ -1,5 +1,5 @@
-import { Component } from '..';
-import { map, is, assoc, toPairs } from 'nanoutils';
+import { Component } from '../Component';
+import { map, is, assoc, toPairs } from '../util/fp';
 
 export const Accumulator = (initial = {}, name = '') => {
   let obj = initial;

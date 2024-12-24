@@ -1,5 +1,5 @@
-import { Component } from '..';
-import { reduce, map, concat, isNil } from 'nanoutils';
+import { Component } from '../Component';
+import { reduce, map, concat, isNil } from '../util/fp';
 
 const outputReducer = (acc, output) => {
   acc[output] = Component((v, next) => {
