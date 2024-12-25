@@ -1,5 +1,6 @@
 import { Component } from '../Component';
 import { map } from '../util/fp';
+import { Mapper } from './Mapper';
 
 export const Hub = (...inputs) => {
   let components = {};

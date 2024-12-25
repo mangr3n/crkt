@@ -1,4 +1,4 @@
-import {isNil,reduce,dissoc,is,length} from "nanoutils";
+import {isNil,reduce,dissoc,is,length} from "./util/fp";
 
 import { EVENT } from './interfaces';
 import { merge } from './util/funcs';
@@ -31,11 +31,12 @@ const fromObjectArg = (original, argObject) => {
 };
 
 const processArg = (original, arg) => {
-  if (is(Function, arg)) return fromFunctionArg(original, arg);
-  if (is(String, arg)) return fromStringArg(original, arg);
-  if (is(Boolean, arg)) return fromBooleanArg(original, arg);
-  if (is(Array, arg)) return fromArrayArg(original, arg);
-  if (is(Object, arg)) return fromObjectArg(original, arg);
+  if (arg === null || arg === undefined) return original;
+  if (is(Function)(arg)) return fromFunctionArg(original, arg);
+  if (is(String)(arg)) return fromStringArg(original, arg);
+  if (is(Boolean)(arg)) return fromBooleanArg(original, arg);
+  if (is(Array)(arg)) return fromArrayArg(original, arg);
+  if (is(Object)(arg)) return fromObjectArg(original, arg);
   throw new Error(`Component/processOneArg, arg can't be processed: ${arg}`);
 };
 

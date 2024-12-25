@@ -4,9 +4,14 @@
   "description": "Framework for creating Components with dataflow semantics",
   "main": "build/index.js",
   "scripts": {
-    "test": "jest",
-    "compile": "tsc",
-    "clean": "rm -rf build"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "compile": "rescript build && tsc",
+    "clean": "rescript clean && rm -rf build",
+    "res:build": "rescript build",
+    "res:start": "rescript build -w",
+    "res:clean": "rescript clean"
   },
   "repository": {
     "type": "git",
@@ -23,8 +28,11 @@
   },
   "homepage": "https://github.com/mangr3n/crkt#readme",
   "devDependencies": {
-    "jest": "^24.8.0",
+    "@rescript/core": "^1.0.0",
+    "rescript": "^11.0.0",
+    "@vitest/coverage-v8": "^1.1.0",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "concurrently": "^7.5.0"
   }
 }

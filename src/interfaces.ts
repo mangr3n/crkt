@@ -1,5 +1,5 @@
 import { ComponentID, ConnectionID } from './ID';
-import {equals} from "nanoutils";
+import {equals} from "./util/fp";
 
 export const EVENT = 'event';
 export const SIGNAL = 'signal';

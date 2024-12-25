@@ -1,8 +1,6 @@
 declare var require;
-const { toArgsObject } = require('../src/args');
-
-declare var expect;
-declare var test;
+import { toArgsObject} from '../src/args';
+import { test, expect } from 'vitest';
 
 test('expect string to return a named Identity Component', () => {
   expect(toArgsObject(['test'])).toMatchObject({
