@@ -4,4 +4,6 @@ node_modules/
 *.iml
 build/
 reference/
+lib/
+examples/word-frequency-analyzer/data/count_1w.txt
 

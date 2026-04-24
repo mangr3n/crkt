@@ -36,9 +36,10 @@ export const GraphComponent: (arg: any) => IComponent = (arg) => {
     connections = [],
     inputs = [],
     outputs = [],
-    debug = [],
+    debug: _rawDebug = [],
     name = 'Anonymous',
   } = arg;
+  const debug = Array.isArray(_rawDebug) ? _rawDebug : [];
 
   const _debugMap: PortIDMap = {};
   const componentID = nextID();
