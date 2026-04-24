@@ -1,11 +1,12 @@
 import { Component } from './Component';
+import { Component as IComponent } from './interfaces';
 import { isNil, uniq, append, fromPairs, map, keys } from './util/fp';
 import { nextID } from './ID';
 import { debugMessage } from './util/debug';
 import { Identity } from './index';
 
 interface ComponentMap {
-  [index: string]: Component;
+  [index: string]: IComponent;
 }
 
 interface PortIDMap {
@@ -29,7 +30,7 @@ const selectNode = (name, components, io = 'inputs') => {
 const _debugLabel = (name, id) => `Component(${name}:${id})`;
 
 // Default inputs and outputs, 'in','out'
-export const GraphComponent: (any) => Component = (arg) => {
+export const GraphComponent: (arg: any) => IComponent = (arg) => {
   const {
     components,
     connections = [],
@@ -112,7 +113,7 @@ export const GraphComponent: (any) => Component = (arg) => {
     inputs,
     outputs,
     connections,
-    components: map(v => v.description, components)
+    components: map((v: any) => v.description, components)
   });
   const result = {
     // This is the Connection API

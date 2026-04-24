@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "suppressImplicitAnyIndexErrors": true,
     "module": "commonjs",
     "lib": ["es2019","dom","es5"],
     "target": "ES5",
