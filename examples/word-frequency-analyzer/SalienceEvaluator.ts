@@ -1,30 +1,42 @@
 import { Component } from '../../src/Component';
 import { Source } from './components/Source';
+import { Tokenizer } from './components/Tokenizer';
 import { TextSplitter } from './components/TextSplitter';
+import { WordCount } from './components/WordCount';
 import { WordCounter } from './components/WordCounter';
 import { QueryableMemory } from './components/QueryableMemory';
 
 export const SalienceEvaluator = (content) => {
   const source = Source(content);
+  const tokenizer = Tokenizer();
   const splitter = TextSplitter();
+  const wordCount = WordCount();
+  const wordCountMemory = QueryableMemory();
   const counter = WordCounter();
-  const memory = QueryableMemory();
+  const counterMemory = QueryableMemory();
 
   return Component({
     name: 'SalienceEvaluator',
     components: {
       source,
+      tokenizer,
       splitter,
+      wordCount,
+      wordCountMemory,
       counter,
-      memory,
+      counterMemory,
     },
     connections: [
       ['in', 'source'],
-      ['source', 'splitter'],
+      ['source', 'tokenizer'],
+      ['tokenizer', 'splitter'],
+      ['tokenizer', 'wordCount'],
+      ['wordCount', 'wordCountMemory'],
       ['splitter', 'counter'],
-      ['counter', 'memory'],
-      ['splitter.done', 'memory.query'],
-      ['memory', 'out'],
+      ['counter', 'counterMemory'],
+      ['splitter.done', 'wordCountMemory.query'],
+      ['splitter.done', 'counterMemory.query'],
+      ['counterMemory', 'out'],
     ],
   });
 };

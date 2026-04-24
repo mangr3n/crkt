@@ -2,12 +2,12 @@ import { describe, it, expect, vi } from 'vitest';
 import { TextSplitter } from '../../../examples/word-frequency-analyzer/components/TextSplitter';
 
 describe('TextSplitter', () => {
-  it('should split a sentence into individual lowercase words, stripping punctuation', (done) => {
+  it('should serialize an array of words into individual word emissions', (done) => {
     const splitter = TextSplitter();
     const handler = vi.fn();
 
     splitter.on(handler);
-    splitter.send("The quick brown fox jumped over the lazy dog.");
+    splitter.send(["the", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"]);
 
     setTimeout(() => {
       expect(handler).toHaveBeenCalledTimes(9);
@@ -25,7 +25,7 @@ describe('TextSplitter', () => {
 
     splitter.on(wordHandler);
     splitter.on('done', doneHandler);
-    splitter.send("The quick brown fox.");
+    splitter.send(["the", "quick", "brown", "fox"]);
 
     setTimeout(() => {
       expect(wordHandler).toHaveBeenCalledTimes(4);

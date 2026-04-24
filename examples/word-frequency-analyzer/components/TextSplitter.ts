@@ -1,8 +1,7 @@
-import { Component, Demuxer, Chain } from '../../../src';
+import { Component, Demuxer } from '../../../src';
 
 export const TextSplitter = () => {
-  const tokenizer = Component('Tokenizer', (text, next) => {
-    const words = text.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(w => w.length > 0);
+  const serializer = Component('Serializer', (words, next) => {
     for (const word of words) next({ value: word });
     next({ done: true });
   });
@@ -12,13 +11,13 @@ export const TextSplitter = () => {
   return Component({
     name: 'TextSplitter',
     components: {
-      tokenizer,
+      serializer,
       splitter,
     },
     outputs: ['done'],
     connections: [
-      ['in', 'tokenizer'],
-      ['tokenizer', 'splitter'],
+      ['in', 'serializer'],
+      ['serializer', 'splitter'],
       ['splitter.value', 'out'],
       ['splitter.done', 'out.done'],
     ],
