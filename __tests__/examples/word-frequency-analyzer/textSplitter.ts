@@ -17,4 +17,20 @@ describe('TextSplitter', () => {
       done();
     }, 20);
   });
+
+  it('should emit a done signal on the done port after all words are emitted', (done) => {
+    const splitter = TextSplitter();
+    const wordHandler = vi.fn();
+    const doneHandler = vi.fn();
+
+    splitter.on(wordHandler);
+    splitter.on('done', doneHandler);
+    splitter.send("The quick brown fox.");
+
+    setTimeout(() => {
+      expect(wordHandler).toHaveBeenCalledTimes(4);
+      expect(doneHandler).toHaveBeenCalledTimes(1);
+      done();
+    }, 20);
+  });
 });
