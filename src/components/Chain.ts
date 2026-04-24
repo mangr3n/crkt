@@ -11,7 +11,7 @@ export const Chain = (...args) => {
   const outputs = keys(last.outputs);
 
   const componentKeys = range(0, lastIndex);
-  const internalConnections = map(i => ([`c${i}`, `c${i + 1}`]), componentKeys);
+  const internalConnections = map((i: number) => ([`c${i}`, `c${i + 1}`]), componentKeys);
   // console.log('component/Chain ', { internalConnections, componentKeys });
 
   const inputConnections = map(input => ([`in.${input}`, `c0.${input}`]), inputs);

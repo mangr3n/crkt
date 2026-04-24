@@ -9,7 +9,7 @@ export const curry = <T extends any[], R>(
     if (args.length >= fn.length) {
       return fn(...(args as T));
     }
-    return (...args2: Partial<T>) => curried(...args.concat(args2));
+    return (...args2: Partial<T>) => curried(...(args.concat(args2) as any));
   };
 };
 
@@ -63,8 +63,8 @@ export const toPairs = <T>(obj: { [key: string]: T }): [string, T][] =>
   Object.entries(obj);
 
 export const dissoc = curry(<T extends object>(key: string, obj: T): Omit<T, keyof T & string> => {
-  const { [key]: _, ...rest } = obj;
-  return rest;
+  const { [key]: _, ...rest } = obj as any;
+  return rest as any;
 });
 
 export const length = (x: any): number => {
