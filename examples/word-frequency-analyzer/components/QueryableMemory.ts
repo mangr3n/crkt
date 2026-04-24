@@ -23,6 +23,5 @@ export const QueryableMemory = () => {
       ['in.query', 'query'],
       ['query', 'out'],
     ],
-    debug: [],
   });
 };
