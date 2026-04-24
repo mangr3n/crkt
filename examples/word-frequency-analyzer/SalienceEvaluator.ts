@@ -6,8 +6,12 @@ import { WordCount } from './components/WordCount';
 import { WordCounter } from './components/WordCounter';
 import { QueryableMemory } from './components/QueryableMemory';
 import { PercentageMapper } from './components/PercentageMapper';
+import { DeviationScorer } from './components/DeviationScorer';
+import { loadZipfReference } from './data/loadZipfReference';
 
-export const SalienceEvaluator = (content) => {
+export const SalienceEvaluator = (content: string, topN: number = 10) => {
+  const reference = loadZipfReference();
+
   const source = Source(content);
   const tokenizer = Tokenizer();
   const splitter = TextSplitter();
@@ -16,6 +20,7 @@ export const SalienceEvaluator = (content) => {
   const counter = WordCounter();
   const counterMemory = QueryableMemory();
   const percentageMapper = PercentageMapper();
+  const deviationScorer = DeviationScorer(reference, topN);
 
   return Component({
     name: 'SalienceEvaluator',
@@ -28,12 +33,13 @@ export const SalienceEvaluator = (content) => {
       counter,
       counterMemory,
       percentageMapper,
+      deviationScorer,
     },
     connections: [
       ['in', 'source'],
       ['source', 'tokenizer'],
-      ['tokenizer', 'splitter'],
       ['tokenizer', 'wordCount'],
+      ['tokenizer', 'splitter'],
       ['wordCount', 'wordCountMemory'],
       ['splitter', 'counter'],
       ['counter', 'counterMemory'],
@@ -41,7 +47,8 @@ export const SalienceEvaluator = (content) => {
       ['splitter.done', 'counterMemory.query'],
       ['counterMemory', 'percentageMapper'],
       ['wordCountMemory', 'percentageMapper.total'],
-      ['percentageMapper', 'out'],
+      ['percentageMapper', 'deviationScorer'],
+      ['deviationScorer', 'out'],
     ],
   });
 };

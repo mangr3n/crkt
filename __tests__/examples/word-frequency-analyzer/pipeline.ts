@@ -18,10 +18,11 @@ describe('Word Frequency Pipeline', () => {
     const mapHandler = vi.fn();
     const countHandler = vi.fn();
 
-    // Wire: Source → Tokenizer → TextSplitter (words) → WordCounter → counterMemory
+    // Wire: Source → Tokenizer → [WordCount, TextSplitter (words)] → WordCounter → counterMemory
+    // WordCount must be wired before TextSplitter so it processes before done fires
     source.on(v => tokenizer.send(v));
-    tokenizer.on(v => splitter.send(v));
     tokenizer.on(v => wordCount.send(v));
+    tokenizer.on(v => splitter.send(v));
     wordCount.on(v => wordCountMemory.send(v));
     splitter.on(v => counter.send(v));
     counter.on(v => counterMemory.send(v));
