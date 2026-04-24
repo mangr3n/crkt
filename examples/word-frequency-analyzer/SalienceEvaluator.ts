@@ -5,6 +5,7 @@ import { TextSplitter } from './components/TextSplitter';
 import { WordCount } from './components/WordCount';
 import { WordCounter } from './components/WordCounter';
 import { QueryableMemory } from './components/QueryableMemory';
+import { PercentageMapper } from './components/PercentageMapper';
 
 export const SalienceEvaluator = (content) => {
   const source = Source(content);
@@ -14,6 +15,7 @@ export const SalienceEvaluator = (content) => {
   const wordCountMemory = QueryableMemory();
   const counter = WordCounter();
   const counterMemory = QueryableMemory();
+  const percentageMapper = PercentageMapper();
 
   return Component({
     name: 'SalienceEvaluator',
@@ -25,6 +27,7 @@ export const SalienceEvaluator = (content) => {
       wordCountMemory,
       counter,
       counterMemory,
+      percentageMapper,
     },
     connections: [
       ['in', 'source'],
@@ -36,7 +39,9 @@ export const SalienceEvaluator = (content) => {
       ['counter', 'counterMemory'],
       ['splitter.done', 'wordCountMemory.query'],
       ['splitter.done', 'counterMemory.query'],
-      ['counterMemory', 'out'],
+      ['counterMemory', 'percentageMapper'],
+      ['wordCountMemory', 'percentageMapper.total'],
+      ['percentageMapper', 'out'],
     ],
   });
 };
